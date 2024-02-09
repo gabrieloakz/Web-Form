@@ -1,4 +1,6 @@
+<!-- index.php -->
+
 <?php
-// Inclua o formulário na página inicial
-include 'views/formulario.php';
+header("Location: /views/formulario.php");
+exit;
 ?>

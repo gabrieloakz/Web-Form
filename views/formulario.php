@@ -1,4 +1,20 @@
-<!-- formulario.php -->
+<!-- views/formulario.php -->
+
+<?php
+require_once('../controllers/UserController.php');
+
+$userController = new UserController();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nome = $_POST['nome'];
+    $sobrenome = $_POST['sobrenome'];
+    $idade = $_POST['idade'];
+
+    $userController->cadastrarUsuario($nome, $sobrenome, $idade);
+}
+
+$usuarios = $userController->listarUsuarios();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +30,7 @@
     <h2>Cadastro de Usuário</h2>
 
     <!-- Formulário -->
-    <form action="controllers/processa-formulario.php" method="POST">
+    <form action="" method="POST">
         <div class="form-group">
             <label for="nome">Nome:</label>
             <input type="text" class="form-control" id="nome" name="nome" required>
@@ -32,6 +48,14 @@
 
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
+
+    <!-- Lista de Usuários -->
+    <h2 class="mt-4">Lista de Usuários</h2>
+    <ul>
+        <?php foreach ($usuarios as $usuario): ?>
+            <li><?php echo "{$usuario->nome} {$usuario->sobrenome}, {$usuario->idade} anos"; ?></li>
+        <?php endforeach; ?>
+    </ul>
 </div>
 
 </body>
