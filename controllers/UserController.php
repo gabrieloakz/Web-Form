@@ -34,5 +34,36 @@ class UserController {
 
         return $usuarios;
     }
+
+    public function obterUsuario($id) {
+        $sql = "SELECT * FROM usuarios WHERE id = $id";
+        $result = $this->db->conn->query($sql);
+
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+
+            $user = new UserModel();
+            $user->id = $row['id'];
+            $user->nome = $row['nome'];
+            $user->sobrenome = $row['sobrenome'];
+            $user->idade = $row['idade'];
+
+            return $user;
+        }
+
+        return null;
+    }
+
+    public function atualizarUsuario($id, $nome, $sobrenome, $idade) {
+        $sql = "UPDATE usuarios SET nome='$nome', sobrenome='$sobrenome', idade='$idade' WHERE id=$id";
+        $result = $this->db->conn->query($sql);
+        return $result;
+    }
+
+    public function excluirUsuario($id) {
+        $sql = "DELETE FROM usuarios WHERE id = $id";
+        $result = $this->db->conn->query($sql);
+        return $result;
+    }
 }
 ?>
